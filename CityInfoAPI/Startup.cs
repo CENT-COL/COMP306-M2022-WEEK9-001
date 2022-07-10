@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +29,7 @@ namespace CityInfoAPI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {          
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -35,7 +37,14 @@ namespace CityInfoAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CityInfoAPI", Version = "v1" });
             });
 
-            services.AddDbContext<CityInfoDBContext>();
+
+
+            var connectionBuilder = new SqlConnectionStringBuilder(Configuration["ConnectionStrings:Connection2RDS"]);
+            connectionBuilder.UserID = Configuration["DBUser"];
+            connectionBuilder.Password = Configuration["DBPassword"];
+            var connection = connectionBuilder.ConnectionString;
+
+            services.AddDbContext<CityInfoDBContext>(options => options.UseSqlServer(connection));
             services.AddScoped<ICityInfoRepository, CityInfoRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

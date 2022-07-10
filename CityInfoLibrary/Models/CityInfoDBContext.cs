@@ -20,14 +20,6 @@ namespace CityInfoLibrary.Models
         public virtual DbSet<CityInfo> CityInfo { get; set; }
         public virtual DbSet<PointOfInterest> PointsOfInterest { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=mssqlserver-comp306-summer2022.c0tp8qgq2ue5.us-east-1.rds.amazonaws.com;Initial Catalog=CityInfoDB;Persist Security Info=True;User ID=admin;Password=mssqlserver4api");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

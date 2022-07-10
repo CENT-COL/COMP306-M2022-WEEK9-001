@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace CityInfoAPI
 {
     public class Program
@@ -18,8 +19,12 @@ namespace CityInfoAPI
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureAppConfiguration(builder =>
                 {
+                    builder.AddSystemsManager("/WebApp4Sec001");
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {                    
                     webBuilder.UseStartup<Startup>();
                 });
     }
